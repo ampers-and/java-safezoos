@@ -17,10 +17,35 @@ public class ZooController
     @Autowired
     private ZooService zooService;
 
-    // GET: localhost:2019/zoos/zoos
+    // GET: localhost:2020/zoos/zoos
     @GetMapping(value = "/zoos", produces = {"application/json"})
     public ResponseEntity<?> listAllZoos()
     {
         return new ResponseEntity<>(zooService.findAll(), HttpStatus.OK);
+    }
+
+    //GET: localhost:2020/zoos/zoos/:{id}
+    @GetMapping(value = "/zoos/{zooId}",
+            produces = {"application/json"})
+    public ResponseEntity<?> getZooById(
+            @PathVariable
+                    Long zooId)
+    {
+        Zoo z = zooService.findZooById(zooId);
+        return new ResponseEntity<>(z,
+                HttpStatus.OK);
+    }
+
+
+    //GET: localhost:2020/zoos/{name}
+    @GetMapping(value = "/zoos/{zooName}",
+            produces = {"application/json"})
+    public ResponseEntity<?> getZooByName(
+            @PathVariable
+                    String zooName)
+    {
+        Zoo z = zooService.findZooByName(zooName);
+        return new ResponseEntity<>(z,
+                HttpStatus.OK);
     }
 }
